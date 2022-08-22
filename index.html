@@ -2,50 +2,130 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
+
+  <!-- Tailwind play cdn ( for development and play purposes ) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="js/tailwind-config.js"></script>
+
+  <!-- Alpine.js -->
+  <!-- Alpine Plugins -->
+  <script defer src="https://unpkg.com/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://unpkg.com/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
+
+  <!-- Alpine Core -->
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
   
   <title>Frontend Mentor | Interactive card details form</title>
 
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <style>
-    .attribution { font-size: 11px; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
-  </style>
 </head>
 <body>
 
-  0000 0000 0000 0000
-  Jane Appleseed
-  00/00
+  <main x-data="card()">
+    <h1 class="sr-only">Interactive card details form</h1>
+    <section class="relative">
+      <div>
+        <img src="images/bg-main-mobile.png" alt="gradient background decoration">
+        <img class="hidden" src="images/bg-main-desktop.png" alt="gradient background decoration">
+      </div>
+      <div class="absolute top-8 right-4">
+        <img class="w-72" src="images/bg-card-back.png" alt="image of credit card back">
+        <div class="absolute top-16 right-8 pt-1.5 tracking-widest">
+          <p class="text-white text-[10px]" x-text="cvc === '' ? '000' : cvc"></p>
+        </div>
+      </div>
+      <div class="absolute bottom-0 left-4 -mb-12">
+        <img class="w-72" src="images/bg-card-front.png" alt="image of credit card front">
+        <div class="absolute top-0">
+          <img class="w-16" src="images/card-logo.svg" alt="card logo">
+<!--          <svg width="84" height="47" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="23.478" cy="23.5" rx="23.478" ry="23.5" fill="#fff"/><path d="M83.5 23.5c0 5.565-4.507 10.075-10.065 10.075-5.559 0-10.065-4.51-10.065-10.075 0-5.565 4.506-10.075 10.065-10.075 5.558 0 10.065 4.51 10.065 10.075Z" stroke="#fff"/></svg>-->
+          <p x-text="number === '' ? '0000 0000 0000 0000' : number"></p>
+          <p x-text="name === '' ? 'Jane Appleseed' : name"></p>
+          <p><span x-text="month === '' ? '00' : month"></span>/<span x-text="year === '' ? '00' : year"></span></p>
+        </div>
+      </div>
+    </section>
+    <section class="bg-white p-4">
+      <form class="flex flex-col gap-2" x-show="!completed" action="">
+        <label>
+          <span class="text-gray-violet-dark">Cardholder Name</span>
+          <input
+                  class=""
+                  x-model="name"
+                  type="text"
+                  placeholder="e.g. Jane Appleseed"
+                  required
+          >
+        </label>
 
-  000
+        <label>
+          <span class="text-gray-violet-dark">Card Number</span>
+          <input
+                  class=""
+                  x-mask='9999 9999 9999 9999'
+                  x-model="number"
+                  type="text"
+                  placeholder="e.g. 1234 5678 9123 0000"
+                  required
+          >
+        </label>
 
-  Cardholder Name
-  e.g. Jane Appleseed
+        <label>
+          <span class="text-gray-violet-dark">Exp. Date (MM/YY)</span> <span>
+          <input
+                  class=""
+                  x-mask="99"
+                  x-model="month"
+                  type="text"
+                  placeholder="MM"
+                  required
+          >
+          /
+          <input class=""
+                  x-mask="99"
+                 x-model="year"
+                 type="text"
+                 placeholder="YY"
+                 required
+          >
+        </span>
+        </label>
 
-  Card Number
-  e.g. 1234 5678 9123 0000
+        <label>
+          <span class="text-gray-violet-dark">CVC</span>
+          <input
+                  class=""
+                  x-mask="999"
+                  x-model="cvc"
+                  type="text"
+                  placeholder="e.g. 123"
+                  required
+          >
+        </label>
 
-  Exp. Date (MM/YY)
-  MM
-  YY
+        <button class="bg-gray-violet-dark text-white text-center px-4 py-3 rounded-md" @click="completed = true" type="submit">Confirm</button>
+      </form>
+      <div class="flex flex-col gap-2" x-show="completed">
+        <h2>Thank you!</h2>
+        <p>We've added your card details</p>
+        <button class="bg-gray-violet-dark text-white text-center px-4 py-3 rounded-md" @click="completed = false">Continue</button>
+      </div>
+    </section>
+  </main>
 
-  CVC
-  e.g. 123
-
-  Confirm
-
-  <!-- Completed state start -->
-
-  Thank you!
-  We've added your card details
-  Continue
-  
-  <div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
-  </div>
+  <footer class="fixed bottom-0 inset-x-0">
+    <div class="text-gray-violet-dark p-2 text-xs text-center">
+      Challenge by <a class="hover:underline ease-in-out duration-150" href="https://www.frontendmentor.io/challenges/todo-app-Su1_KokOW" target="_blank">Frontend Mentor</a>.
+      Coded by <a class="hover:underline ease-in-out duration-150" href="https://www.frontendmentor.io/profile/wendyhamel" target="_blank">Wendy Hamel</a>.
+    </div>
+  </footer>
+  <script src="js/card.js"></script>
 </body>
 </html>

@@ -13,6 +13,11 @@ tailwind.config = {
             'gray-violet-medium': 'hsl(279, 6%, 55%)',
             'gray-violet-dark' : 'hsl(278, 68%, 11%)',
 
+        },
+        extend: {
+            fontSize: {
+                xxs: '0.625rem'
+            }
         }
     }
 }

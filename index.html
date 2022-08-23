@@ -20,10 +20,6 @@
   <!-- Alpine Core -->
   <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-  <!-- Iodine for form validation -->
-  <script defer src="https://cdn.jsdelivr.net/npm/@kingshott/iodine@8.3.0/dist/iodine.min.umd.js"></script>
-
-
   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
   
   <title>Frontend Mentor | Interactive card details form</title>
@@ -63,21 +59,27 @@
               class="grid gap-5"
               x-show="!completed"
               method="post"
-              x-init="$watch('number', value => { validate('number')})"
+              x-init="
+              $watch('name', value => { validate('name')})
+              $watch('number', value => { validate('number')})
+              $watch('month', value => { validate('month')})
+              $watch('year', value => { validate('year')})
+              $watch('cvc', value => { validate('cvc')})
+"
       >
         <label class="grid gap-1">
-          <span class=" uppercase text-xs ">Cardholder Name</span>
+          <span class="uppercase text-xs ">Cardholder Name</span>
           <input
                   class="inline-flex w-full py-2.5 px-3 rounded-md border border-gray-violet-light placeholder:text-gray-violet-medium/60 hover:border-gray-violet-dark focus:border-gray-violet-dark focus:outline-none invalid:border-red ease-in-out duration-150"
                   x-model="name"
                   type="text"
                   placeholder="e.g. Jane Appleseed"
           >
-          <span class="text-red text-xs" x-text="validation.name.message"></span>
+          <span class="text-red text-xs tracking-wide" x-text="validation.name.message"></span>
         </label>
 
         <label class="grid gap-1">
-          <span class=" uppercase text-xs ">Card Number</span>
+          <span class="uppercase text-xs ">Card Number</span>
           <input
                   class="inline-flex w-full py-2.5 px-3 rounded-md border border-gray-violet-light placeholder:text-gray-violet-medium/60 hover:border-gray-violet-dark focus:border-gray-violet-dark focus:outline-none invalid:border-red ease-in-out duration-150"
                   x-mask='9999 9999 9999 9999'
@@ -85,13 +87,13 @@
                   type="text"
                   placeholder="e.g. 1234 5678 9123 0000"
           >
-          <span class="text-red text-xs" x-text="validation.number.message"></span>
+          <span class="text-red text-xs tracking-wide" x-text="validation.number.message"></span>
         </label>
 
         <div class="grid grid-cols-2 gap-3 items-start">
 
           <label class="grid gap-1">
-            <span class=" uppercase text-xs ">Exp. Date (MM/YY)</span>
+            <span class="uppercase text-xs ">Exp. Date (MM/YY)</span>
             <span class="flex items-center gap-2">
               <input
                       class="inline-flex w-full py-2.5 px-3 rounded-md border border-gray-violet-light placeholder:text-gray-violet-medium/60 hover:border-gray-violet-dark focus:border-gray-violet-dark focus:outline-none invalid:border-red ease-in-out duration-150"
@@ -108,13 +110,13 @@
               >
             </span>
             <span>
-              <span class="text-red text-xs" x-text="validation.month.message"></span>
-              <span class="text-red text-xs" x-text="validation.year.message"></span>
+              <span class="block text-red text-xs tracking-wide" x-text="validation.month.message"></span>
+              <span class="block text-red text-xs tracking-wide" x-text="validation.year.message"></span>
             </span>
           </label>
 
           <label class="grid gap-1">
-            <span class=" uppercase text-xs">CVC</span>
+            <span class="uppercase text-xs">CVC</span>
             <input
                     class="inline-flex w-full py-2.5 px-3 rounded-md border border-gray-violet-light placeholder:text-gray-violet-medium/60 hover:border-gray-violet-dark focus:border-gray-violet-dark focus:outline-none invalid:border-red ease-in-out duration-150"
                     x-mask="999"
@@ -122,11 +124,17 @@
                     type="text"
                     placeholder="e.g. 123"
             >
+            <span class="text-red text-xs" x-text="validation.cvc.message"></span>
           </label>
-          <span class="text-red text-xs" x-text="validation.cvc.message"></span>
         </div>
 
-        <button class="flex justify-center px-4 py-3 rounded-md border border-transparent bg-gray-violet-dark text-white text-lg hover:bg-white hover:text-gray-violet-dark hover:border-gray-violet-dark focus:bg-white focus:text-gray-violet-dark focus:border-gray-violet-dark focus:outline-none ease-in-out duration-150" @click="completed = true" type="submit">Confirm</button>
+        <button
+              class="flex justify-center px-4 py-3 rounded-md border border-transparent bg-gray-violet-dark text-white text-lg hover:bg-white hover:text-gray-violet-dark hover:border-gray-violet-dark focus:bg-white focus:text-gray-violet-dark focus:border-gray-violet-dark focus:outline-none ease-in-out duration-150"
+              @click="confirm()"
+              type="submit"
+        >
+          Confirm
+        </button>
       </form>
       <div class="flex flex-col items-center gap-10" x-show="completed">
         <img class="w-20" src="images/icon-complete.svg" alt="checkmark">
@@ -134,12 +142,17 @@
           <h2 class="uppercase text-3xl">Thank you!</h2>
           <p class="text-gray-violet-medium">We've added your card details</p>
         </div>
-        <button class="self-stretch flex justify-center px-4 py-3 rounded-md border border-transparent bg-gray-violet-dark text-white text-lg hover:bg-white hover:text-gray-violet-dark hover:border-gray-violet-dark focus:bg-white focus:text-gray-violet-dark focus:border-gray-violet-dark focus:outline-none ease-in-out duration-150" @click="completed = false">Continue</button>
+        <button
+              class="self-stretch flex justify-center px-4 py-3 rounded-md border border-transparent bg-gray-violet-dark text-white text-lg hover:bg-white hover:text-gray-violet-dark hover:border-gray-violet-dark focus:bg-white focus:text-gray-violet-dark focus:border-gray-violet-dark focus:outline-none ease-in-out duration-150"
+              @click="finish()"
+        >
+          Continue
+        </button>
       </div>
     </section>
   </main>
 
-  <footer class="fixed bottom-0 inset-x-0 bg-white/75">
+  <footer class="mx-auto">
     <div class="p-2 text-xxs text-center">
       Challenge by <a class="hover:underline ease-in-out duration-150" href="https://www.frontendmentor.io/challenges/todo-app-Su1_KokOW" target="_blank">Frontend Mentor</a>.
       Coded by <a class="hover:underline ease-in-out duration-150" href="https://www.frontendmentor.io/profile/wendyhamel" target="_blank">Wendy Hamel</a>.

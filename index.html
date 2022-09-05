@@ -29,34 +29,36 @@
 
   <main x-data="card()" class="grow md:flex">
     <h1 class="sr-only">Interactive card details form</h1>
-    <section class="relative sm:max-h-80 sm:overflow-hidden md:max-h-full">
+    <section class="relative sm:max-h-80 sm:overflow-hidden md:max-h-screen lg:overflow-visible">
       <img class="h-full w-full object-cover md:hidden" src="images/bg-main-mobile.png" alt="gradient background decoration">
       <img class="hidden md:block md:object-cover md:h-full md:w-full" src="images/bg-main-desktop.png" alt="gradient background decoration">
-      <div class="absolute top-0 inset-x-0">
-        <div class="relative max-w-sm mx-auto">
-            <div class="absolute top-8 right-4">
-              <img class="w-72" src="images/bg-card-back.png" alt="image of credit card back">
-              <div class="absolute inset-0 right-8  flex items-center justify-end">
-                <p class="text-white text-xxs" x-text="cvc === '' ? '000' : cvc"></p>
-              </div>
-            </div>
-            <div class="absolute top-32 left-4">
-              <img class="w-72" src="images/bg-card-front.png" alt="image of credit card front">
+      <div class="absolute inset-0">
+        <div class="md:relative md:h-screen md:grid md:place-items-center lg:-mr-56 xl:-mr-96">
+          <div class="relative max-w-sm mx-auto">
+            <div class="absolute z-10 top-32 left-4 md:relative md:top-0 md:-left-4 lg:-left-24 xl:-left-8">
+              <img class="w-72 lg:w-96" src="images/bg-card-front.png" alt="image of credit card front">
               <div class="absolute inset-0 text-white p-4 flex flex-col justify-between">
                 <img class="w-14" src="images/card-logo.svg" alt="card logo">
                 <div>
-                  <p class="text-lg" x-text="number === '' ? '0000 0000 0000 0000' : number"></p>
-                  <div class="mt-3 flex justify-between text-xxs ">
+                  <p class="text-lg lg:text-[1.65rem]" x-text="number === '' ? '0000 0000 0000 0000' : number"></p>
+                  <div class="mt-3 flex justify-between text-xxs lg:text-xs">
                     <p class="uppercase" x-text="name === '' ? 'Jane Appleseed' : name"></p>
                     <p><span x-text="month === '' ? '00' : month"></span>/<span x-text="year === '' ? '00' : year"></span></p>
                   </div>
                 </div>
               </div>
             </div>
+            <div class="absolute top-8 right-4 md:relative md:top-12 md:-right-4 lg:right-6 xl:-right-8">
+              <img class="w-72 lg:w-96" src="images/bg-card-back.png" alt="image of credit card back">
+              <div class="absolute inset-0 right-8 flex items-center justify-end lg:right-12">
+                <p class="text-white text-xxs lg:text-xs" x-text="cvc === '' ? '000' : cvc"></p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
-    <section class="bg-white pt-24 px-6 pb-12">
+    <section class="bg-white pt-24 px-6 pb-12 md:grid md:place-items-center md:mx-auto md:max-w-sm md:px-4 lg:px-0">
       <form
               class="grid gap-5"
               x-show="!completed"
@@ -92,7 +94,7 @@
           <span class="text-red text-xs tracking-wide" x-text="validation.number.message"></span>
         </label>
 
-        <div class="grid grid-cols-2 gap-3 items-start">
+        <div class="grid grid-cols-2 gap-3 items-start md:gap-5">
 
           <label class="grid gap-1">
             <span class="uppercase text-xs ">Exp. Date (MM/YY)</span>
@@ -154,9 +156,9 @@
     </section>
   </main>
 
-  <footer class="mx-auto">
-    <div class="p-2 text-xxs text-center">
-      Challenge by <a class="hover:underline ease-in-out duration-150" href="https://www.frontendmentor.io/challenges/todo-app-Su1_KokOW" target="_blank">Frontend Mentor</a>.
+  <footer class="mx-auto md:flex md:fixed md:right-0 md:bottom-0">
+    <div class="p-2 text-xxs text-center ">
+      Challenge by <a class="hover:underline ease-in-out duration-150 drop-shadow-md" href="https://www.frontendmentor.io/challenges/todo-app-Su1_KokOW" target="_blank">Frontend Mentor</a>.
       Coded by <a class="hover:underline ease-in-out duration-150" href="https://www.frontendmentor.io/profile/wendyhamel" target="_blank">Wendy Hamel</a>.
     </div>
   </footer>

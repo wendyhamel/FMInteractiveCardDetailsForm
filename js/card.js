@@ -1,13 +1,6 @@
 window.card = function () {
     return {
         completed: Alpine.$persist(false),
-        // formData: Alpine.$persist({
-        //     name: '',
-        //     number: '',
-        //     month: '',
-        //     year: '',
-        //     cvc: '',
-        // }),
         name: Alpine.$persist(''),
         number: Alpine.$persist(''),
         month: Alpine.$persist(''),
